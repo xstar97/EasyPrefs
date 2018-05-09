@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.xstar97.easyprefs.ui.fragments.MainActivityFragment"
+    tools:showIn="@layout/activity_main">
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_alignParentTop="true" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spinner"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/api_data"
+            android:layout_width="143dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:ems="10"
+            android:hint="@string/api_hint_data"
+            android:inputType="none" />
+
+        <Button
+            android:id="@+id/api_put"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/api_get"
+            android:layout_toStartOf="@+id/api_get"
+            android:text="@string/api_action_put" />
+
+        <Button
+            android:id="@+id/api_get"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/api_action_get" />
+
+        <TextView
+            android:id="@+id/load_api_data"
+            android:hint="data: "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/api_get"/>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
