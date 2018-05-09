@@ -1,5 +1,10 @@
 # EasyPrefs
 
+[![](https://jitpack.io/v/Xstar97/EasyPrefs.svg)](https://jitpack.io/#Xstar97/EasyPrefs)
+
+     
+     implementation 'com.github.Xstar97:EasyPrefs:v1.0'
+
     //default put; String
         new EasyPrefs(context)
                 .setPreference()
