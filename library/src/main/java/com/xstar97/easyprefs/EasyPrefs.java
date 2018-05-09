@@ -10,11 +10,10 @@ import java.util.Set;
 
 import static com.xstar97.easyprefs.Utils.isValid;
 
+@SuppressWarnings({"unused", "FieldCanBeLocal"})
 public class EasyPrefs
 {
     private String TAG = EasyPrefs.class.getName();
-
-    private String ERROR_PREFERENCE_OBJECT = "invalid object value!";
 
     private Context context;
     private SharedPreferences getPrefs;
@@ -46,17 +45,59 @@ public class EasyPrefs
     }
 
     private String getPreferenceName(){
-        return prefName;
+        if(isValid(prefName)) {
+            return prefName;
+        }
+        else {
+            Log.d(TAG_PREF, ERROR_PREFERENCE_NAME);
+            return null;
+        }
     }
+    @SuppressWarnings("ConstantConditions")
     private int getMode(){
-        return mode;
+        if(isValid(mode)) {
+            return mode;
+        }
+        else {
+            Log.d(TAG_MODE, ERROR_PREFERENCE_MODE);
+            return -1;
+        }
     }
     private String getKey(){
-        return key;
+        if(isValid(key)) {
+            return key;
+        }
+        else {
+            Log.d(TAG_KEY, ERROR_PREFERENCE_KEY);
+            return null;
+        }
     }
     private Object getValue(){
-        return value;
+        if(isValid(value)) {
+            return value;
+        }
+        else {
+            Log.d(TAG_VALUE, ERROR_PREFERENCE_OBJECT);
+            return null;
+        }
     }
+
+    private String TAG_PREF = "Preference";
+    private String TAG_EDITOR = "Preference.Editor";
+    private String TAG_NAME = "Preference.Name";
+    private String TAG_MODE = "Preference.Mode";
+    private String TAG_KEY = "Preference.Key";
+    private String TAG_VALUE = "Preference.Value";
+
+    private String ERROR_PREFERENCE = "SharedPreferences method is null!";
+    private String ERROR_PREFERENCE_EDITOR = "SharedPreferences Editor method is null!";
+    private String ERROR_PREFERENCE_NAME = "SharedPreferences method 'NAME' is null!";
+    private String ERROR_PREFERENCE_MODE = "SharedPreferences method 'MODE' is 'null'!";
+    private String ERROR_PREFERENCE_KEY = "SharedPreferences method 'KEY' is null!";
+    private String ERROR_PREFERENCE_OBJECT = "Object not accepted for sharedPreferences";
+
+    private String PREFERENCE_DEFAULT = "Setting SharedPreferences with DEFAULT values...";
+    private String PREFERENCE_CUSTOM = "Setting SharedPreferences with CUSTOM values...";
 
     /**
      * The Mode private method.
@@ -120,23 +161,28 @@ public class EasyPrefs
         if(isValid(getPrefs)) {
             return getPrefs;
         }
-        return null;
+        else {
+            Log.d(TAG_PREF, ERROR_PREFERENCE);
+            return null;
+        }
     }
     private SharedPreferences.Editor getEditor(){
-        if(isValid(getPrefs)) {
-            return getPrefs.edit();
+        if(isValid(getPref())) {
+            return getPref().edit();
+        }else {
+            Log.d(TAG_PREF, ERROR_PREFERENCE_EDITOR);
+            return null;
         }
-        return null;
     }
 
     public EasyPrefs setPreference(){
-        boolean mPref = isValid(getPreferenceName());
-        boolean mMode = getMode() == DEFAULT_PREF_MODE;
-
-        if(!mPref || mMode) {
-            this.getPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-        }else {
+        if(isPreferenceCustom()){
+            Log.d(TAG_PREF, PREFERENCE_CUSTOM);
             this.getPrefs = context.getSharedPreferences(getPreferenceName(), getMode());
+        }
+        else {
+            Log.d(TAG_PREF, PREFERENCE_DEFAULT);
+            this.getPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         }
         return this;
     }
@@ -198,6 +244,7 @@ public class EasyPrefs
      *
      * @return all
      */
+    @SuppressWarnings("unchecked")
     public Map<String, Object> getAll() {
         try {
             return (Map<String, Object>) new Get(getPref()).getAll();
@@ -287,5 +334,12 @@ public class EasyPrefs
         }catch (Exception e){
             Log.e(TAG, e.getMessage());
         }
+    }
+
+    private boolean isPreferenceCustom(){
+        boolean mPref = isValid(getPreferenceName());
+        boolean mMode = getMode() != DEFAULT_PREF_MODE;
+
+        return mPref && mMode;
     }
 }

@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    Snackbar.make(view, "hello world: " + randomNumber(), Snackbar.LENGTH_LONG)
+                    Snackbar.make(view, "hello world", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
             }
         });
@@ -65,37 +65,22 @@ public class MainActivity extends AppCompatActivity {
 
             return true;
         } else if (id == R.id.action_api_clear) {
+            EasyPrefs clear = new EasyPrefs(MainActivity.this);
+            clear.setPreference();
             if(randomNumber() == 0){
-                new EasyPrefs(MainActivity.this)
-                        .setPreference()
-                        .setKey(KEY_STRING)
-                        .clearValue();
+                clear.setKey(KEY_STRING);
             } else if(randomNumber() == 1){
-                new EasyPrefs(MainActivity.this)
-                        .setPreference()
-                        .setKey(KEY_BOOLEAN)
-                        .clearValue();
+                clear.setKey(KEY_BOOLEAN);
             } else if(randomNumber() == 2){
-                new EasyPrefs(MainActivity.this)
-                        .setPreference()
-                        .setKey(KEY_SET)
-                        .clearValue();
+                clear.setKey(KEY_SET);
             } else if(randomNumber() == 3){
-                new EasyPrefs(MainActivity.this).
-                        setPreference()
-                        .setKey(KEY_INT)
-                        .clearValue();
+                clear.setKey(KEY_INT);
             } else if(randomNumber() == 4){
-                new EasyPrefs(MainActivity.this)
-                        .setPreference()
-                        .setKey(KEY_FLOAT)
-                        .clearValue();
+                clear.setKey(KEY_FLOAT);
             } else if(randomNumber() == 5){
-                new EasyPrefs(MainActivity.this)
-                        .setPreference()
-                        .setKey(KEY_LONG)
-                        .clearValue();
+                clear.setKey(KEY_LONG);
             }
+            clear.clearValue();
             return true;
         } else if (id == R.id.action_api_clear_all) {
             new EasyPrefs(MainActivity.this)

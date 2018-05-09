@@ -1,8 +1,9 @@
 package com.xstar97.easyprefs.ui.fragments;
 
+import android.annotation.SuppressLint;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,8 @@ import com.xstar97.easyprefs.R;
 import java.util.HashSet;
 import java.util.Set;
 
+@SuppressWarnings("FieldCanBeLocal")
+//do not use this as an example...use 'PreferenceFragment' instead!
 public class MainActivityFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener
 {
     private int PREF_STRING = 0;
@@ -52,10 +55,10 @@ public class MainActivityFragment extends Fragment implements View.OnClickListen
     public MainActivityFragment() {
     }
 
-    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    @Override public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_main, container, false);
     }
-    @Override public void onViewCreated(View view, Bundle savedInstanceState) {
+    @Override public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         prepareData(view);
@@ -63,10 +66,10 @@ public class MainActivityFragment extends Fragment implements View.OnClickListen
     }
 
     private void put_api(Object object){
+        int position = spinner.getSelectedItemPosition();
+
         EasyPrefs prefs = new EasyPrefs(getActivity());
         prefs.setPreference();
-        int position = spinner.getSelectedItemPosition();
-        Log.d("spinner", "id: " + position);
         if(position == PREF_BOOLEAN){
             prefs.setKey(KEY_BOOLEAN);
         } else if(position == PREF_SET){
@@ -86,16 +89,17 @@ public class MainActivityFragment extends Fragment implements View.OnClickListen
     }
     private Object get_api(){
 
-        EasyPrefs prefs = new EasyPrefs(getActivity());
-        prefs.setPreference();
-        Set<String> set = new HashSet<String>();
+        Set<String> set = new HashSet<>();
         set.add("s");
         set.add("h");
         set.add("i");
         set.add("t");
 
         long position = spinner.getSelectedItemPosition();
-        Log.d("spinner", "id: " + position);
+
+        EasyPrefs prefs = new EasyPrefs(getActivity());
+        prefs.setPreference();
+
         if(position == PREF_BOOLEAN){
             prefs.setKey(KEY_BOOLEAN);
             prefs.setValue(false);//default to the same type value for "error" handling...
@@ -120,7 +124,7 @@ public class MainActivityFragment extends Fragment implements View.OnClickListen
     }
 
     private Set<String> data_set(){
-        data_set = new HashSet<String>();
+        data_set = new HashSet<>();
         data_set.add("A");
         data_set.add("B");
         data_set.add("C");
@@ -130,19 +134,20 @@ public class MainActivityFragment extends Fragment implements View.OnClickListen
         return data_set;
     }
 
+    @SuppressWarnings("ConstantConditions")
     private void prepareData(View view){
-        spinner = (Spinner)view.findViewById(R.id.spinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+        spinner = view.findViewById(R.id.spinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_spinner_item,paths);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 
-        editText = (EditText) view.findViewById(R.id.api_data);
-        api_put = (Button) view.findViewById(R.id.api_put);
-        api_get = (Button) view.findViewById(R.id.api_get);
-        data = (TextView) view.findViewById(R.id.load_api_data);
+        editText = view.findViewById(R.id.api_data);
+        api_put = view.findViewById(R.id.api_put);
+        api_get = view.findViewById(R.id.api_get);
+        data = view.findViewById(R.id.load_api_data);
 
         api_put.setOnClickListener(this);
         api_get.setOnClickListener(this);
@@ -161,6 +166,7 @@ public class MainActivityFragment extends Fragment implements View.OnClickListen
         super.onDestroy();
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -174,7 +180,6 @@ public class MainActivityFragment extends Fragment implements View.OnClickListen
 
                 long position = spinner.getSelectedItemPosition();
 
-                Log.d("spinner", "id: " + position);
                 if(position == PREF_BOOLEAN){
                     put_api(data_boolean);
                 } else if(position == PREF_SET){
@@ -193,9 +198,10 @@ public class MainActivityFragment extends Fragment implements View.OnClickListen
         }
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Log.d("onItemSelected", "pos: " + position);
+
         if(position == PREF_STRING){
             editText.setEnabled(true);
             editText.setText("");
