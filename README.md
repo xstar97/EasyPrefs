@@ -2,6 +2,8 @@
 
 [![](https://jitpack.io/v/Xstar97/EasyPrefs.svg)](https://jitpack.io/#Xstar97/EasyPrefs)
 
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-EasyPrefs-brightgreen.svg?style=plastic)](https://android-arsenal.com/details/1/6922)
+
      
      implementation 'com.github.Xstar97:EasyPrefs:v1.0'
 
